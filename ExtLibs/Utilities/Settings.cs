@@ -84,7 +84,7 @@ namespace MissionPlanner.Utilities
         }
 
         public string UserAgent { get; set; } = "MissionPlanner";
-        
+
         public string ComPort
         {
             get { return this["comport"]; }
@@ -154,7 +154,7 @@ namespace MissionPlanner.Utilities
                 }
                 catch
                 {
-                
+
                 }
             }
 
@@ -324,6 +324,12 @@ namespace MissionPlanner.Utilities
         /// <returns></returns>
         public static string GetDataDirectory()
         {
+            var runningDir = GetRunningDirectory();
+            if (runningDir.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                return runningDir + "PortableDataDir" + Path.DirectorySeparatorChar;
+            else
+                return runningDir + Path.DirectorySeparatorChar + "PortableDataDir" + Path.DirectorySeparatorChar;
+
             if (isMono())
             {
                 return GetUserDataDirectory();
@@ -343,6 +349,12 @@ namespace MissionPlanner.Utilities
         /// <returns></returns>
         public static string GetUserDataDirectory()
         {
+            var runningDir = GetRunningDirectory();
+            if (runningDir.EndsWith(Path.DirectorySeparatorChar.ToString()))
+                return runningDir + "PortableUserDir" + Path.DirectorySeparatorChar;
+            else
+                return runningDir + Path.DirectorySeparatorChar + "PortableUserDir" + Path.DirectorySeparatorChar;
+
             if (CustomUserDataDirectory != "")
                 return CustomUserDataDirectory + Path.DirectorySeparatorChar + AppConfigName +
                        Path.DirectorySeparatorChar;
